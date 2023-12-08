@@ -1,0 +1,137 @@
+import numpy as np
+import pandas as pd
+import tensorflow as tf
+import seaborn as sns
+import matplotlib.pyplot as plt
+from sklearn import metrics
+from sklearn.metrics import accuracy_score,confusion_matrix,mean_squared_error,r2_score
+from sklearn.preprocessing import LabelEncoder,StandardScaler
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LinearRegression, Perceptron
+from sklearn.cluster import AgglomerativeClustering,KMeans
+from scipy.cluster.hierarchy import dendrogram, linkage
+from sklearn.naive_bayes import GaussianNB
+from sklearn.tree import DecisionTreeClassifier,plot_tree
+from sklearn.impute import SimpleImputer
+from sklearn.svm import SVC
+from mlxtend.plotting import plot_decision_regions
+from sklearn.linear_model import Perceptron
+from sklearn.neural_network import MLPClassifier
+
+
+<---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
+
+df = sns.load_dataset('titanic')
+df = pd.read_csv('titanic')
+df.head()
+#display first few elements
+df.tail()
+#display last few elements
+df.describe()
+#statistical details
+df.info()
+#details on colu, data types, values.
+df.columns
+#display column names
+
+<---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
+
+drm = df
+drm.rename(columns={'embark_town':'emb_t'},inplace=True)
+#rename columns
+drm.columns
+#display col names
+
+<---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
+
+dc = df
+dc.columns
+dc = dc.drop(['deck','parch'],axis=1)
+#delete selected columns
+dc.columns
+
+<---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
+
+dr = dr.drop([0,5])
+#delete selected rows
+dr.reset_index(drop=True,inplace=True)
+#reset index for better understanding
+dr.head()
+
+<---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
+
+df['deck'].unique()
+#check unique values in column
+
+<---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
+<---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
+
+df.isnull().sum()
+#tells null values in entire dataframe
+
+<---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
+
+dnull = df
+dnull.age.isnull().sum()
+#tells null values in selected column
+
+dnull['age'].fillna(dnull['age'].mean(),inplace = True)
+#fills null values by given entry as mean,avg,max,etc
+#here first term is value and second is inplace
+
+dnull.age.isnull().sum()
+
+<---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
+
+dnull['deck'].unique()
+
+dnull = dnull.drop('deck',axis=1)
+#drop deck column as it is having many null values
+
+<---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
+
+dnull.isnull().sum()
+dnull = dnull.dropna(axis=0,how="any")
+#drop rows having null values
+dnull.isnull().sum()
+
+<---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
+<---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
+
+from sklearn import preprocessing
+#make an instance of Label Encoder
+#automatically dos this based on alphabetical order
+
+label_encoder = preprocessing.LabelEncoder()
+
+dcn['class'] = label_encoder.fit_transform(dcn['class'])
+
+<---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
+
+#we have to replace manually for bool
+dcnp['adult_male'].replace({False: 0, True: 1}, inplace=True)
+dcnp['alone'].replace({False: 0, True: 1}, inplace=True)
+
+<---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
+
+#we have to replace manually for object
+dcnp['sex'].replace(['male','female'],[1,0], inplace=True)
+
+<---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
+<---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
+
+from sklearn.preprocessing import StandardScaler
+#scales where mean=0 and SD=1
+
+std = StandardScaler()
+dstd[['fare']] = std.fit_transform(dstd[['fare']])
+
+<---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
+
+from sklearn.preprocessing import MinMaxScaler
+#put values in range 0 to 1
+
+minmax = MinMaxScaler()
+dstd[['age']] = minmax.fit_transform(dstd[['age']])
+
+<---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->

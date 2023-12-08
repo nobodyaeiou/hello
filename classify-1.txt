@@ -1,0 +1,99 @@
+iris = pd.read_csv('Iris.csv')
+
+label_encoder = LabelEncoder()
+iris['Species'] = label_encoder.fit_transform(iris['Species'])
+
+
+X = iris.drop('Species',axis=1)
+y = iris['Species']
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.20, random_state=42)
+
+
+model = GaussianNB()
+model.fit(X_train, y_train)
+y_pred = model.predict(X_test)
+
+
+accuracy = metrics.accuracy_score(y_test, y_pred)
+print(f"Accuracy: {accuracy*100:.2f}")
+
+
+target_names = [str(name) for name in iris['Species'].unique()]
+print(metrics.classification_report(y_test, y_pred, target_names=target_names))
+
+
+<---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
+
+
+
+X=iris.iloc[:,0:4].values
+y=iris['Species'].values
+X_train,X_test,y_train,y_test = train_test_split(X,y,test_size = 0.3, random_state=0)
+
+
+dt=DecisionTreeClassifier(criterion='entropy')
+dt.fit(X_train, y_train)
+Y_pred = dt.predict(X_test)
+
+
+Y_pred
+
+
+accuracy_dt=round(accuracy_score(y_test,Y_pred)* 100, 2)
+acc_decision_tree = round(dt.score(X_train, y_train) * 100, 2)
+cm = confusion_matrix(y_test, Y_pred)
+accuracy = accuracy_score(y_test,Y_pred)
+precision =precision_score(y_test, Y_pred,average='micro')
+recall =  recall_score(y_test, Y_pred,average='micro')
+f1 = f1_score(y_test,Y_pred,average='micro')
+print('Confusion matrix for DecisionTree\n',cm)
+print('accuracy_DecisionTree: %.3f' %accuracy)
+print('precision_DecisionTree: %.3f' %precision)
+print('recall_DecisionTree: %.3f' %recall)
+print('f1-score_DecisionTree : %.3f' %f1)
+
+
+
+from sklearn.tree import plot_tree
+plt.figure(figsize = (15,10))
+plot_tree(dt.fit(X_train, y_train)  ,filled=True)
+plt.show()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

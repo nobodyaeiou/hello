@@ -1,0 +1,36 @@
+
+
+iris = load_iris()
+X = iris.data[:, [2, 3]] 
+y = iris.target
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+
+sc = StandardScaler()
+X_train_std = sc.fit_transform(X_train)
+X_test_std = sc.transform(X_test)
+
+
+svcclassifier = SVC(kernel='linear', random_state=0)
+svcclassifier.fit(X_train_std, y_train)
+
+
+y_test_int = pd.Categorical(y_test).codes
+y_pred = svcclassifier.predict(X_test_std)
+
+
+
+accuracy = accuracy_score(y_test_int, y_pred)
+print(f"Accuracy Score: {accuracy:.2f}")
+cm = confusion_matrix(y_test_int, y_pred)
+print("Confusion Matrix:")
+print(cm)
+
+
+
+plt.figure(figsize=(10, 4))
+plot_decision_regions(X_test_std, y_test_int, clf=svcclassifier, legend=2)
+plt.title('SVC Decision Boundaries (Linear Kernel)')
+plt.xlabel('Feature 1 (Standardized)')
+plt.ylabel('Feature 2 (Standardized)')
+plt.show()

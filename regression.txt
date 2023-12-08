@@ -1,0 +1,69 @@
+df = pd.read_csv('Salary_dataset.csv')
+df=df.dropna()
+df.drop('Unnamed: 0',axis=1,inplace=True)
+
+
+X = df.drop('Salary',axis=1)
+Y = df['Salary']
+X_train,X_test,Y_train,Y_test = train_test_split(X,Y,test_size=0.2,random_state=42)
+
+
+model = LinearRegression()
+model.fit(X_train,Y_train)
+Y_pred = model.predict(X_test)
+diff = pd.DataFrame({'Actual value': Y_test, 'Predicted value': Y_pred})
+
+
+mse = mean_squared_error(Y_test, Y_pred)
+r2 = r2_score(Y_test, Y_pred)
+print("Mean Squared Error:", mse)
+print("R-squared:", r2)
+
+
+plt.figure(figsize=(10, 6))
+plt.scatter(X['YearsExperience'], Y, color='blue', label='Original data')
+plt.plot(X_test['YearsExperience'], Y_pred, color='red', linewidth=3, label='Regression line')
+plt.title('Linear Regression - Salary Prediction')
+plt.xlabel('Years of Experience')
+plt.ylabel('Salary')
+plt.legend()
+plt.show()
+
+
+<---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
+
+
+df = pd.read_csv("advertising.csv")
+
+
+x = df[['TV','Radio','Newspaper']]
+y = df['Sales']
+x_train, x_test, y_train, y_test = train_test_split(x, y, test_size = 0.3, random_state = 100)
+
+
+model = LinearRegression()
+model.fit(x_train,y_train)
+y_pred = model.predict(x_test)
+diff = pd.DataFrame({'Actual value': y_test, 'Predicted value': y_pred})
+
+
+print("Intercepts",model.intercept_)
+print("Coefficient",)
+list(zip(x,model.coef_))
+
+
+meanAbErr = metrics.mean_absolute_error(y_test, y_pred)
+meanSqErr = metrics.mean_squared_error(y_test, y_pred)
+rootMeanSqErr = np.sqrt(metrics.mean_squared_error(y_test, y_pred))
+print('Mean Absolute Error:', meanAbErr)
+print('Mean Square Error:', meanSqErr)
+print('Root Mean Square Error:', rootMeanSqErr)
+print('R squared: {:.2f}'.format(model.score(x,y)*100))
+
+
+plt.scatter(y_test, y_pred)
+plt.xlabel("Actual Values")
+plt.ylabel("Predicted Values")
+plt.title("Actual vs Predicted Values for Linear Regression")
+plt.show()
+
